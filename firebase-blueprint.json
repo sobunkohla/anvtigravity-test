@@ -1,0 +1,108 @@
+{
+  "entities": {
+    "Task": {
+      "title": "Task",
+      "description": "A workflow task on the Kanban board",
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "The name of the task"
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed description of the task"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["todo", "in_progress", "review", "completed"],
+          "description": "Current status of the task"
+        },
+        "category": {
+          "type": "string",
+          "description": "Task category or tag"
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["low", "medium", "high"],
+          "description": "Task priority level"
+        },
+        "dueDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Deadline for the task"
+        },
+        "assigneeName": {
+          "type": "string",
+          "description": "Name of the person assigned to the task"
+        },
+        "assigneeAvatar": {
+          "type": "string",
+          "description": "URL to the assignee's avatar image"
+        },
+        "timeSpent": {
+          "type": "string",
+          "description": "Time logged on the task"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["title", "status", "createdAt"]
+    },
+    "ChatSession": {
+      "title": "ChatSession",
+      "description": "A chat session with the AI assistant",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string"
+        },
+        "lastMessage": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "description": "A single message in a chat history",
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string",
+          "enum": ["user", "model"]
+        },
+        "content": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  },
+  "firestore": {
+    "/tasks": {
+      "schema": "Task",
+      "description": "Global collection of Kanban tasks"
+    },
+    "/chats": {
+      "schema": "ChatSession",
+      "description": "Chat sessions for AI assistant"
+    },
+    "/chats/{chatId}/messages": {
+      "schema": "ChatMessage",
+      "description": "Individual messages within a chat session"
+    }
+  }
+}
